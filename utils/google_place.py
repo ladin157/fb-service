@@ -49,8 +49,9 @@ def search_phone(place_id='ChIJm7NJkla3j4AR8vR-HWRxgOo'):
 
 
 if __name__ == '__main__':
-    place_id = search_place(place='Museum of Contemporary Art Australia')
+    # place_id = search_place(place='Museum of Contemporary Art Australia')
+    # print(place_id)
+    place_id = search_place(place='Computer History Museum Mountain View')
     print(place_id)
-    # search_place(place='Computer History Museum Mountain View')
-    phone = search_phone(place_id='ChIJm7NJkla3j4AR8vR-HWRxgOo')
+    phone = search_phone(place_id=place_id) #'ChIJm7NJkla3j4AR8vR-HWRxgOo')
     print(phone)

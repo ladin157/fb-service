@@ -14,11 +14,11 @@ class User(Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
 
-    firstname = db.Column(db.String)
-    lastname = db.Column(db.String)
+    firstname = db.Column(db.String(80))
+    lastname = db.Column(db.String(80))
 
-    email = db.Column(db.String)  # (255), unique=True)
-    password_hash = db.Column(db.String)  # (128), default='')
+    email = db.Column(db.String(255), unique=True)
+    password_hash = db.Column(db.String(128), default='')
     admin = db.Column(db.Boolean, default=False)
 
     def set_password(self, password):

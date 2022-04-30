@@ -31,6 +31,7 @@ def encode_filename_md5(filename):
     encoded = hashlib.md5(filename.encode('utf8')).hexdigest()
     return encoded
 
+
 def encode_file_name(filename):
     '''
     Encode the filename (without extension).
@@ -41,7 +42,6 @@ def encode_file_name(filename):
     '''
     encoded = hashlib.sha224(filename.encode('utf8')).hexdigest()
     return encoded
-
 
 
 def encode_auth_token(user_id, user_role):

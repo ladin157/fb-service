@@ -6,8 +6,9 @@ class Config:
     SECRET_KEY = os.environ.get('FLASK_SECRET', 'f495b66803a6512d')
     SECURITY_SALT = os.environ.get('FLASK_SALT', '14be1971fc014f1b84')
 
-    APP_DIR = os.path.abspath(os.path.dirname(__file__))
-    LOG_PATH = '/var/log/fb-service/fb-service.log'
+    APP_DIR = os.path.dirname(os.path.dirname(__file__))
+    # LOG_PATH = '/var/log/fb-service/fb-service.log'
+    LOG_PATH = os.path.join(APP_DIR, 'logs/fb-service.log')
     PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, os.pardir))
     STATIC_FOLDER = os.path.join(PROJECT_ROOT, 'static')
     IMAGE_FOLDER = os.path.join(STATIC_FOLDER, 'images')
@@ -25,13 +26,11 @@ class DevelopmentConfig(Config):
     DEBUG = True
     DEBUG_TB_ENABLED = True
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://ben:Ben0102%40@159.65.13.232:3306/fb'
-    # SQLALCHEMY_DATABASE_URI = 'mysql://ben:Ben0102%40@159.65.13.232:3306/fb'
 
 
 class ProductionConfig(Config):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://ben:Ben0102%40@159.65.13.232:3306/fb'
-    # SQLALCHEMY_DATABASE_URI = 'mysql://ben:Ben0102%40@159.65.13.232:3306/fb'
 
 
 class TestConfig(Config):
@@ -39,8 +38,9 @@ class TestConfig(Config):
 
     TESTING = True
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite://'
-    BCRYPT_LOG_ROUNDS = 4  # For faster tests; needs at least 4 to avoid "ValueError: Invalid rounds"
+    EBUG_TB_ENABLED = True
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://ben:Ben0102%40@159.65.13.232:3306/fbtest'
+    BCRYPT_LOG_ROUNDS = 4  # For faster test; needs at least 4 to avoid "ValueError: Invalid rounds"
 
 
 config_by_name = dict(
