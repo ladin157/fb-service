@@ -124,9 +124,9 @@ class UserController(Controller):
         if user is None:
             user = User()
         if 'firstname' in data:
-            user.first_name = data['first_name']
+            user.firstname = data['firstname']
         if 'lastname' in data:
-            user.last_name = data['last_name']
+            user.lastname = data['lastname']
         if 'email' in data:
             user.email = data['email']
         if 'password' in data:
