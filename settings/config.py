@@ -18,6 +18,7 @@ class Config:
     DEBUG_TB_INTERCEPT_REDIRECTS = False
 
     AUTH_TOKEN = '0001f9f05a59574bbf602d6117ad6d2d'
+    GOOGLE_API_KEY = 'AIzaSyCDcUmm1LO0yeRVqdPsxo2ku6-weisiWHk'
 
 
 class DevelopmentConfig(Config):
