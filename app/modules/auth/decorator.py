@@ -13,12 +13,16 @@ def token_required(f):
 
     @wraps(f)
     def decorated(*args, **kwargs):
-        b = AuthController.check_token(request)
-        if not b:
+        user, message = AuthController.get_logged_user(request)
+        if user is None:
             return send_error(message="Please provide a valid token to continue.")
+        # b = AuthController.check_token(request)
+        # if not b:
+        #     return send_error(message="Please provide a valid token to continue.")
         return f(*args, **kwargs)
 
     return decorated
+
 
 def admin_token_required(f):
     '''
