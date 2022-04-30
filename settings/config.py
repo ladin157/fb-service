@@ -1,13 +1,6 @@
 import os
 
 
-class Threshold:
-    UPPER_BOTH = 1.25
-    UPPER_SINGLE = 1.5
-    LOWER_BOTH = 0.5
-    LOWER_SINGLE = 0.25
-
-
 class Config:
     DEBUG = False
     SECRET_KEY = os.environ.get('FLASK_SECRET', 'f495b66803a6512d')
@@ -30,20 +23,14 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
     DEBUG_TB_ENABLED = True
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://gsm_mysql:Gsm%402022@117.4.240.104:2098/gsm'
-    MONGODB_SETTINGS = {
-        'host': 'mongodb://localhost:27017/gsm',
-        'db': 'gsm'
-    }
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://ben:Ben0102%40@159.65.13.232:3306/fb'
+    # SQLALCHEMY_DATABASE_URI = 'mysql://ben:Ben0102%40@159.65.13.232:3306/fb'
 
 
 class ProductionConfig(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://gsm_mysql:Gsm%402022@117.4.240.104:2098/gsm'
-    MONGODB_SETTINGS = {
-        'host': 'mongodb://localhost:27017/gsm',
-        'db': 'gsm'
-    }
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://ben:Ben0102%40@159.65.13.232:3306/fb'
+    # SQLALCHEMY_DATABASE_URI = 'mysql://ben:Ben0102%40@159.65.13.232:3306/fb'
 
 
 class TestConfig(Config):

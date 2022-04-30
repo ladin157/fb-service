@@ -1,21 +1,11 @@
-import os
-
-import dateutil.parser
-from flask import request, send_file, url_for
 from flask_restx import marshal
 
 from app import db
-from app.modules.auth.auth_controller import AuthController
 from app.modules.common.controller import Controller
 from app.modules.user.user import User
 from app.modules.user.user_dto import UserDto
 from settings.config import Config
 from utils.response import send_error, send_result
-from utils.util import encode_file_name
-
-AVATAR_FOLDER = Config.AVATAR_FOLDER
-STATIC_FOLDER = Config.STATIC_FOLDER
-IMAGE_FOLDER = Config.IMAGE_FOLDER
 
 
 class UserController(Controller):
@@ -133,111 +123,20 @@ class UserController(Controller):
             print(e.__str__())
             return send_error(message='Could not delete user')
 
-    def upload_avatar(self, args):
-        '''
-        Upload avatar.
-
-        :param args:
-        :return:
-        '''
-        if not isinstance(args, dict) or not 'avatar' in args:
-            return send_error(message='Your request does not contain avatar.')
-        # upload here
-        user, message = AuthController.get_logged_user(request)
-        # user = User.query.filter_by(id=id).first()
-        if user is None:
-            return send_error(message)
-
-        photo = args['avatar']
-        if photo:
-            file_name = 'user_' + str(user.id) + '_avatar'
-            file_name = encode_file_name(file_name) + ".png"
-            try:
-                if not os.path.exists(STATIC_FOLDER):
-                    os.mkdir(STATIC_FOLDER)
-                if not os.path.exists(IMAGE_FOLDER):
-                    os.mkdir(IMAGE_FOLDER)
-                if not os.path.exists(AVATAR_FOLDER):
-                    os.mkdir(AVATAR_FOLDER)
-                photo.save(os.path.join(AVATAR_FOLDER, file_name))
-                user.profile_pic_url = url_for('user_avatar', filename=file_name)
-                db.session.commit()
-                return send_result(data=marshal(user, UserDto.model_response), message='Upload avatar successfully.')
-            except Exception as e:
-                print(e.__str__())
-                return send_error(message='Could not save your avatar.')
-        else:
-            return send_error(message='Please attach or check your photo before uploading.')
-
-    def get_avatar(self):
-        user, message = AuthController.get_logged_user(request)
-        # user = User.query.filter_by(id=id).first()
-        if user is None:
-            return send_error(message)
-        file_name = 'user_' + str(user.id) + '_avatar'
-        filename = encode_file_name(file_name) + ".png"
-        # filename = request.args.get('filename')
-        filename = os.path.join(AVATAR_FOLDER, filename)
-        if os.path.exists(filename):
-            return send_file(filename)
-        else:
-            return send_error(message='Avatar does not exist. Upload it first.')
-
     def _parse_user(self, data, user=None):
         if user is None:
             user = User()
-        if 'display_name' in data:
-            user.display_name = data['display_name']
-        if 'title' in data:
-            user.title = data['title']
-
-        if 'first_name' in data:
+        if 'firstname' in data:
             user.first_name = data['first_name']
-        if 'middle_name' in data:
-            user.middle_name = data['middle_name']
-        if 'last_name' in data:
+        if 'lastname' in data:
             user.last_name = data['last_name']
-
-        if 'gender' in data:
-            user.gender = data['gender']
-        if 'age' in data:
-            user.age = data['age']
         if 'email' in data:
             user.email = data['email']
         if 'password' in data:
             user.set_password(password=data['password'])
-
-        if 'last_seen' in data:
-            try:
-                user.last_seen = dateutil.parser.isoparse(data['last_seen'])
-            except Exception as e:
-                print(e.__str__())
-                pass
-        if 'joined_date' in data:
-            try:
-                user.joined_date = dateutil.parser.isoparse(data['joined_date'])
-            except Exception as e:
-                print(e.__str__())
-                pass
-        if 'confirmed' in data:
-            try:
-                user.confirmed = bool(data['confirmed'])
-            except Exception as e:
-                print(e.__str__())
-                pass
-        if 'profile_pic_url' in data:
-            user.profile_pic_url = data['profile_pic_url']
-        if 'profile_pic_data_url' in data:
-            user.profile_pic_data_url = data['profile_pic_data_url']
         if 'admin' in data:
             try:
                 user.admin = bool(data['admin'])
-            except Exception as e:
-                print(e.__str__())
-                pass
-        if 'active' in data:
-            try:
-                user.active = bool(data['active'])
             except Exception as e:
                 print(e.__str__())
                 pass

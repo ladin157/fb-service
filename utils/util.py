@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
 
 import jwt
 
+from settings import config
 from settings.config import Config
 
 
@@ -43,7 +44,7 @@ def encode_file_name(filename):
 
 
 
-def encode_auth_token(user_id):
+def encode_auth_token(user_id, user_role):
     '''
     Generate the Auth token.
 
@@ -56,10 +57,11 @@ def encode_auth_token(user_id):
             'exp': datetime.utcnow() + timedelta(days=30, seconds=5),
             'iat': datetime.utcnow(),
             'sub': user_id,
+            'admin': user_role
         }
         return jwt.encode(
             payload,
-            Config.SECRET_KEY,
+            config.Config.SECRET_KEY,
             algorithm='HS256'
         )
     except Exception as e:
@@ -76,7 +78,7 @@ def decode_auth_token(auth_token):
     :return: integer|string
     """
     try:
-        payload = jwt.decode(auth_token, Config.SECRET_KEY)
+        payload = jwt.decode(auth_token, config.Config.SECRET_KEY)
         return payload['sub'], ''  # return the user_id
     except jwt.ExpiredSignatureError:
         return None, 'Signature expired. Please log in again.'

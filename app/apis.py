@@ -1,6 +1,6 @@
 from flask_restx import Api
 
-from app.modules import ns_upload, ns_user, ns_auth
+from app.modules import ns_user, ns_upload, ns_auth
 
 authorizations = {
     'apikey': {

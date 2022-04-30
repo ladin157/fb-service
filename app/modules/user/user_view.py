@@ -13,12 +13,6 @@ check_parser = api.parser()
 check_parser.add_argument('user_info', type=str, required=True,
                           help='The unique information of the user (it can be ID, email or phone number).')
 
-avatar_upload = api.parser()
-avatar_upload.add_argument('avatar', location='files',
-                           type=FileStorage, required=True, help='The image file to upload')
-
-avatar_download = api.parser()
-avatar_download.add_argument('filename', type=str, required=True, help='The name of the avatar')
 
 
 @api.route('')
@@ -93,29 +87,3 @@ class User(Resource):
         '''
         controller = UserController()
         return controller.delete(object_id=id)
-
-
-@api.route('/avatar')
-class Avatar(Resource):
-    @token_required
-    # @api.expect(avatar_download)
-    def get(self):
-        '''
-        Get user's avatar.
-        -----------------
-        :return:
-        '''
-        controler = UserController()
-        return controler.get_avatar()
-
-    @token_required
-    @api.expect(avatar_upload)
-    def post(self):
-        '''
-        Upload avatar.
-        -------------
-        :return:
-        '''
-        args = avatar_upload.parse_args()
-        controller = UserController()
-        return controller.upload_avatar(args=args)
