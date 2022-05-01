@@ -69,7 +69,13 @@ python manage.py
     - Admin account: `admin@gmail.com/1`
     - Normal account: `test@gmail.com/1`
 
-# 3. Tips
+# 4. Security
+
+API protection:
+- Authentication: All connections to the API must be authenticated and authorized.
+- SSL protection: To protect our API, `certbot` (letsencrypt) can be used. Because of lack the domain name, so it is pending to deploy in this version.
+
+# 5. Tips
 - Install all dependencies in Linux distribution before installing the packages to avoiding errors during installation.
 - If you get any trouble while installing a dependency, install it separately using conda.
 ```bash
