@@ -1,13 +1,15 @@
-import json
 import os
 import shutil
 
-from settings.config import Config
-
 
 def get_file_name_extension(filename):
-    # if not os.path.isfile(filename):
-    #     raise Exception("Can not find the file. Check again please")
+    """
+    Get the name and extension of the filename.
+
+    :param filename: The filename to split
+
+    :return: `name` and `ext`
+    """
     splits = os.path.splitext(filename)
     name, ext = splits[0], splits[1]
     return name, ext
@@ -24,29 +26,6 @@ def get_file_content(filename):
     with open(filename, mode='r') as file:
         content = file.read()
     return content
-
-
-def load_accuracy_content():
-    '''
-    Load content from file and parse to expected json format.
-    :return:
-    '''
-    if not os.path.exists(Config.ACCURACY_FILE):
-        return None
-    else:
-        with open(Config.ACCURACY_FILE, 'r') as f:
-            return json.loads(f.read())
-
-
-def save_accuracy_content(content):
-    '''
-    Save content in json format to file.
-
-    :param content:
-    :return:
-    '''
-    with open(Config.ACCURACY_FILE, mode='w+') as file:
-        json.dump(content, file)
 
 
 def directory_listing(folder_name, file_type=None):
